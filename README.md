@@ -52,6 +52,8 @@ Cosint was designed with the following archetypes in mind:
 1. **Clone the Repository**:
    ```bash  
    git clone <repository_url>
-2. Create a .env file in the api directory based on .env.template.
-3. Start docker containers: docker compose up -d
-4. Access Application: Navigate to localhost:8501 for the Streamlit app. 
+2. **Create a .env file in the api directory based on .env.template.**
+3. **Start docker containers**:
+   ```bash
+   docker compose up -d
+5. Access Application: Navigate to localhost:8501 for the Streamlit app. 
