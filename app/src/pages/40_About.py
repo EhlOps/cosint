@@ -8,11 +8,14 @@ st.write("# About this App")
 
 st.markdown (
     """
-    This is a demo app for CS 3200 Course Project.  
+    Are you a student who wants to be able to easily find a co-op? 🧑‍🎓
+    
+    Are you a recruiter that requires a way to sort through all of the students based on needed metrics? 🤔
+    
+    Are you a school that needs to implement a solution for your co-op program with efficiency and simplicity? 🏫
+    
+    Look no further than COSINT! An application designed for your co-op needs😁
 
-    The goal of this demo is to provide information on the tech stack 
-    being used as well as demo some of the features of the various platforms. 
-
-    Stay tuned for more information and features to come!
+    Please give feedback as we are always developing new features! 🚀
     """
         )
