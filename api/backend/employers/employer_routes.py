@@ -10,11 +10,62 @@ from backend.db_connection import db
 employers = Blueprint("employers", __name__)
 
 
+@employers.route("/employees", methods=["GET"])
+def get_all_employees():
+    query = """
+        SELECT u.id, u.companyId, u.name, u.firstName, u.middleName, u.lastName, u.preferredName, u.pronouns, u.major, u.year, u.birthday, u.profilePic, u.role, u.profile, u.mobile, u.email, u.active, u.advisorId, u.companyId, u.registeredAt, u.updatedAt, u.lastLogin FROM users u 
+        WHERE companyId IS NOT NULL
+        LIMIT 100;
+    """
+
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    data = cursor.fetchall()
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return response
+
 @employers.route("/<id>/employees", methods=["GET"])
 def get_employees(id):
     query = f"""
         SELECT * FROM users u
         WHERE employerId = {int(id)}
+        LIMIT 100;
+    """
+
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    db.get_db().commit()
+    data = cursor.fetchall()
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return response
+
+@employers.route("/emp_company/<name>", methods=["GET"])
+def get_employees_by_company(name):
+    query = f"""
+        SELECT * FROM users u
+        JOIN companies c ON u.companyId = c.id
+        WHERE c.name LIKE CONCAT('%', {name}, '%')
+        LIMIT 100;
+    """
+
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    db.get_db().commit()
+    data = cursor.fetchall()
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return response
+
+@employers.route("/emp_name/<name>", methods=["GET"])
+def get_employee_by_name(name):
+    query = f"""
+        SELECT * FROM users u
+        WHERE name LIKE CONCAT('%', {name}, '%') AND companyId IS NOT NULL
         LIMIT 100;
     """
 

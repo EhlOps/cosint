@@ -153,11 +153,11 @@ CREATE TABLE IF NOT EXISTS application_bookmark
 
 CREATE TABLE IF NOT EXISTS position_application_bookmark
 (
-   positionId int,
-   applicationId int,
-   PRIMARY KEY (positionId, applicationId),
-   CONSTRAINT fk_16 FOREIGN KEY (positionId) REFERENCES positions (id) ON UPDATE CASCADE,
-   CONSTRAINT fk_17 FOREIGN KEY (applicationId) REFERENCES applications (id) ON UPDATE CASCADE
+  positionId int,
+  applicationId int,
+  PRIMARY KEY (positionId, applicationId),
+  CONSTRAINT fk_16 FOREIGN KEY (positionId) REFERENCES positions (id) ON UPDATE CASCADE,
+  CONSTRAINT fk_17 FOREIGN KEY (applicationId) REFERENCES applications (id) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS company_user_bookmark

@@ -6,15 +6,21 @@ VALUES
     ('TechCorp'),
     ('Innovate Inc'),
     ('Healthify Solutions'),
-    ('EduVenture');
+    ('EduVenture'),
+    ('Cosint'),
+    ('Greip');
 
 -- Insert into users
 INSERT INTO users (name, firstName, middleName, lastName, mobile, email, passwordHash, profile, companyId, lastLogin, preferredName, pronouns, major, year, birthday, profilePic, role)
 VALUES
     ('John Doe', 'John', 'A', 'Doe', '1234567890', 'johndoe@example.com', MD5('password123'), 'Senior Engineer at TechCorp', 1, NOW(), 'Jack', 'He/Him', 'Computer Science', 'Senior', '1990-01-01', 'https://example.com/johndoe.jpg', 'Student'),
     ('Jane Smith', 'Jane', 'B', 'Smith', '1234567891', 'janesmith@example.com', MD5('securepass'), 'Manager at Innovate Inc', 2, NOW(), 'Jenny', 'She/Her', 'Business Administration', 'Junior', '1991-02-02', 'https://example.com/janesmith.jpg', 'Admin'),
-    ('Samuel Green', 'Samuel', 'C', 'Green', '1234567892', 'samuelgreen@example.com', MD5('mypassword'), 'Data Scientist at Healthify Solutions', 3, NOW(), 'Sam', 'He/They', 'Data Science', 'Senior', '1992-03-03', 'https://example.com/samuelgreen.jpg', 'Advisor'),
-    ('Emily White', 'Emily', 'D', 'White', '1234567893', 'emilywhite@example.com', MD5('whitepass'), 'CTO at EduVenture', 4, NOW(), 'Em', 'She/Her', 'Computer Engineering', 'Senior', '1993-04-04', 'https://example/emilywhite.jpg', 'Employer');
+    ('Samuel Green', 'Samuel', 'C', 'Green', '1234567892', 'samuelgreen@example.com', MD5('mypassword'), 'Data Scientist at Healthify Solutions', 3, NOW(), 'Sam', 'He/They', 'Data Science', 'Senior', '1992-03-03', 'https://images.sidearmdev.com/convert?url=https%3a%2f%2fdxbhsrqyrr690.cloudfront.net%2fsidearm.nextgen.sites%2funco.sidearmsports.com%2fimages%2f2024%2f8%2f29%2fGreen_Sam_Cropped_HS.png&type=webp', 'Advisor'),
+    ('Emily White', 'Emily', 'D', 'White', '1234567893', 'emilywhite@example.com', MD5('whitepass'), 'CTO at EduVenture', 4, NOW(), 'Em', 'She/Her', 'Computer Engineering', 'Senior', '1993-04-04', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_1lcAVOaA1Vx5AnY7QZiLb2ZxV8Nwf0EVXw&s', 'Employer'),
+    ('Mark Fontenot', 'Mark', 'N', 'Fontenot', '1234567894', 'markfont@example.com', MD5('database'), 'Junior at NEU', NULL, NOW(), 'Mark', 'He/Him', 'Computer Science', 'Junior', '2000-05-01', 'https://media.licdn.com/dms/image/v2/C4E03AQGToUqmxXqtSA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516305759672?e=1738800000&v=beta&t=CNVHwddh5MAMs_DqfJ6A7fbAv59jVp7zvrzHSzg_ij8', 'Student'),
+    ('Jordan Michael', 'Jordan', 'O', 'Michael', '1234567895', 'joming@example.com', MD5('basketball'), 'Admin at Consint', 5, NOW(), 'Jordan', 'He/Him', NULL, NULL, '1989-01-01', 'https://preview.redd.it/michael-jordan-wizards-jersey-legit-or-no-v0-55t5fffppadd1.jpeg?width=976&format=pjpg&auto=webp&s=b29da956bd4f759cbedb9b95c70172e154371491', 'Admin'),
+    ('Joe Montana', 'Joe', 'P', 'Montana', '1234567896', 'jmontana@example.com', MD5('hannah'), 'Advisor at NEU', NULL, NOW(), 'Joe', 'He/Him', NULL, NULL, '1985-02-28', 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/ueq3x4ldeixk2h5wq3n7', 'Advisor'),
+    ('Peter Burke', 'Peter', 'S', 'Burke', '1234567897', 'peterb@example.com', MD5('whitecollar'), 'CEO at Greip', 6, NOW(), 'Pete', 'He/Him', NULL, NULL, '1987-05-11', 'https://funkymbti.com/wp-content/uploads/2024/05/peter2.jpg', 'Employer');
 
 -- Insert into user_references
 INSERT INTO user_references (name, firstName, middleName, lastName, mobile, email, referral, userId) 
