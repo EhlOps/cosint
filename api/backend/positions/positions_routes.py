@@ -15,7 +15,24 @@ positions = Blueprint("positions", __name__)
 @positions.route("/positions", methods=["GET"])
 def get_positions():
     query = """
-        SELECT c.name, p.* FROM positions p NATURAL JOIN companies c 
+        SELECT c.name as compName, p.* FROM positions p NATURAL JOIN companies c 
+        LIMIT 100;
+    """
+
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    data = cursor.fetchall()
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return response
+
+
+@positions.route("/positions_company/<name>", methods=["GET"])
+def get_positions_by_company(name):
+    query = f"""
+        SELECT c.name as compName, p.* FROM positions p JOIN companies c ON p.companyId = c.id
+        WHERE INSTR(c.name, "{str(name)}")
         LIMIT 100;
     """
 
@@ -34,7 +51,7 @@ def get_positions():
 @positions.route("/positions/<id>", methods=["GET"])
 def get_positions_by_id(id):
     query = f"""
-        SELECT c.name, p.* FROM positions p NATURAL JOIN companies c
+        SELECT c.name as compName, p.* FROM positions p JOIN companies c ON p.companyId = c.id
         WHERE p.id = {int(id)};
     """
 
@@ -152,6 +169,24 @@ def get_student_contacts(id):
             JOIN cosint.position_application_bookmark pa ON p.id = pa.positionId
             JOIN cosint.application_bookmark a ON pa.applicationId = a.applicationId
             JOIN cosint.users u ON a.userId = u.id
+        WHERE p.id = {int(id)};
+    """
+
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    data = cursor.fetchall()
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return response
+
+
+@positions.route("/positions/<id>/applications", methods=["GET"])
+def pos_apps(id):
+    query = f"""
+        SELECT a.* FROM cosint.positions p
+            JOIN cosint.position_application_bookmark pa ON p.id = pa.positionId
+            JOIN cosint.applications a ON pa.applicationId = a.id
         WHERE p.id = {int(id)};
     """
 

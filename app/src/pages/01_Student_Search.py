@@ -12,18 +12,18 @@ st.set_page_config(layout="wide")
 
 SideBarLinks()
 
-st.title(f"Student Search")
+st.title("Student Search")
 
 try:
     test_response = requests.get("http://api:4000/stu/students")
 
     if not test_response.status_code == 200:
-        st.error("Failed to fetch categories")
+        st.error("Failed to fetch students")
 except requests.exceptions.RequestException as e:
     st.error(f"Error connecting to students API: {str(e)}")
 
 with st.form("student_search"):
-    student_value = student_input = st.text_input(
+    student_value = st.text_input(
         "Search Students",
         placeholder="Enter student name or Id#",
     )
@@ -36,11 +36,13 @@ with st.form("student_search"):
 
     submit_button = st.form_submit_button("Search")
 
+    df = None
+
     if submit_button:
         if not student_value:
             st.error("Please enter a student name or id")
         else:
-            logger.info(f"Student form submitted with data: {student_value}")
+            logger.info(f"Employee form submitted with data: {student_value}")
 
             try:
                 response1 = requests.get(
@@ -52,10 +54,21 @@ with st.form("student_search"):
                 if response1.status_code == 200:
                     if len(response1.json()) != 0:
                         df = pd.json_normalize(response1.json())
-                        st.write(df)
                 if response2.status_code == 200:
                     if len(response2.json()) != 0:
                         df = pd.json_normalize(response2.json())
-                        st.write(df)
             except requests.exceptions.RequestException as e:
                 st.error(f"Error connecting to server: {str(e)}")
+
+if df is not None:
+    for index, row in df.iterrows():
+        with st.expander(f"{row['firstName']} {row['lastName']}"):
+            col1, col2, col3, col4 = st.columns(4)
+            col1.write("##### Name:")
+            col1.write(f"{row['name']}")
+            col2.write("##### Major:")
+            col2.write(f"{row['major']}")
+            col3.write("##### Year:")
+            col3.write(f"{row['year']}")
+            col4.write("##### Contact:")
+            col4.write(f"{row['email']} | {row['mobile']}")

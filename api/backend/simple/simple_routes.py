@@ -32,14 +32,16 @@ def api_test():
     return response
 
 
-@simple_routes.route("/create_help_ticket")
+@simple_routes.route("/create_help_ticket", methods=["POST"])
 def create_help_ticket():
     data = request.get_json()
+    user_id = str(data["userId"])
+    summary = str(data["summary"])
 
     query = f"""
-        INSERT INTO help_tickets (userId, summary, completed) VALUES
+        INSERT INTO tickets (userId, summary, completed) VALUES
         (
-            {int(data['userId'])}, "{data['summary']}", 0
+            {user_id}, "{summary}", 0
         );
     """
 
@@ -64,6 +66,48 @@ def get_user(user_id):
     cursor = db.get_db().cursor()
 
     cursor.execute(query)
+    data = cursor.fetchall()
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return response
+
+
+@simple_routes.route("/users/<id>", methods=["PUT"])
+def update_users(id):
+    data = request.get_json()
+
+    query = f"""
+        SELECT * FROM users
+        WHERE id = {int(id)};
+    """
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    student = cursor.fetchall()[0]
+
+    if len(student) == 0:
+        response = make_response(jsonify({"message": "id not found"}))
+        response.status_code = 404
+        return response
+
+    query = "UPDATE users "
+
+    if len(data) > 1:
+        query += "SET "
+
+    for key in data:
+        if key in student and key != "id":
+            if type(data[key]) is int:
+                query = query + f"{key} = {data[key]}, "
+            else:
+                query = query + f'{key} = "{data[key]}", '
+
+    query = query[:-2] + f" WHERE id = {int(id)};"
+
+    cursor = db.get_db().cursor()
+
+    cursor.execute(query)
+    db.get_db().commit()
     data = cursor.fetchall()
     response = make_response(jsonify(data))
     response.status_code = 200
